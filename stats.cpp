@@ -1,19 +1,27 @@
 #include "stats.h"
-#include <algorithm>
-#include <limits>
-#include <numeric>
-
-Stats Statistics::ComputeStatistics(const std::vector<float>& numbers) {
-    Stats stats;
-
-    if (numbers.empty()) {
-        stats.average = std::numeric_limits<float>::quiet_NaN();
-        stats.min = std::numeric_limits<float>::quiet_NaN();
-        stats.max = std::numeric_limits<float>::quiet_NaN();
-    } else {
-        stats.average = std::accumulate(numbers.begin(), numbers.end(), 0.0f) / numbers.size();
-        stats.min = *std::min_element(numbers.begin(), numbers.end());
-        stats.max = *std::max_element(numbers.begin(), numbers.end());
+#include <cmath>
+ 
+using namespace std;
+ 
+Statistics::Stats Statistics::ComputeStatistics(const std::vector<float>& input) {
+    //Implement statistics here
+    Statistics::Stats statsanswer;
+    statsanswer.average = NAN;
+    statsanswer.max = NAN;
+    statsanswer.min = NAN;
+    float sum = 0;
+ 
+    if(input.size()){
+ 
+        for(auto it : input){
+            sum += it;
+            statsanswer.max = (statsanswer.max > it) ? statsanswer.max : it ;
+            statsanswer.min = (statsanswer.min < it) ? statsanswer.min : it ;
+        }
+ 
+        statsanswer.average = sum/input.size();
     }
-     return stats;
+ 
+    return statsanswer;
+ 
 }
